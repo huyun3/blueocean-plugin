@@ -197,11 +197,27 @@ class RunDetailsHeader extends Component {
                 );
             }
             const causeMessage = (lastCause && lastCause.shortDescription) || null;
-            return (
-                <div className="causes" title={causeMessage}>
-                    {causeMessage}
-                </div>
-            );
+            //get url
+            //Triggered by Gerrit: https://gerrit.evad.mioffice.cn/c/onboard/mipilot/modules/perception/+/72215 in silent mode.
+            //Triggered by Gerrit: https://gerrit.evad.mioffice.cn/c/onboard/mcu/mcu-mx11-1.5-add1/+/72486
+            // const regex = /^(Triggered by Gerrit: )(.*)$/;
+            // const match = causeMessage.match(regex);
+            const urlRegex = /(https?:\/\/[^\s]+)/;
+            const parts = causeMessage.split(urlRegex);
+            if(parts.length==3){
+                return (
+                    <div style={{ color: 'blue' }} title={causeMessage}>
+                        {parts[0].trim()}{' '}<a className='linkcolor' href={parts[1].trim()}>{parts[1].trim()}</a>{' '}{parts[2].trim()}
+                    </div>
+                );
+            }
+            else{
+                return (
+                    <div className="causes" title={causeMessage}>
+                        {causeMessage}
+                    </div>
+                );
+            }
         };
 
         return (

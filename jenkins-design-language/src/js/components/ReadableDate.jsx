@@ -92,10 +92,13 @@ export class ReadableDate extends Component {
             let tooltip = date.year() !== now.year() ? date.format(longFormat) : date.format(shortFormat);
 
             tooltip = tooltip.replace('+00:00', 'UTC');
-
+            
+            //changgelocal
+            const dateThis = new Date(this.props.date);
+            const localTime = dateThis.toLocaleString();
             return (
-                <time dateTime={this.props.date} title={tooltip}>
-                    {date.fromNow()}
+                <time dateTime={this.props.date} title={date.fromNow()}>
+                    {localTime}
                 </time>
             );
         }
